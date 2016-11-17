@@ -2,6 +2,7 @@ package view;
 
 import java.io.IOException;
 import java.util.Observable;
+import java.util.logging.Level;
 
 import controler.TarotControler;
 import model.TarotModel;
@@ -16,9 +17,8 @@ public class TarotLocalViewGame extends ATarotLocalView {
 		
 		for (int i = 1; i <= 21; i++) {
 			add( new Card("img/ressources-100/cache.jpg"));
-			//add( new Card("img/ressources-100/" + i + ".jpg") );
-		}
-		
+			TarotModel.LOGGER.log(Level.INFO, "Ajout d'un nouvel objet : " + Card.class.getName() + " --> N°" + i);
+		}	
 	}
 
 	@Override

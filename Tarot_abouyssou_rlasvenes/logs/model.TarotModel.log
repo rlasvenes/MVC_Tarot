@@ -1,2 +1,23 @@
-WARNING  : [model.TarotModel] -:- [main] -:- Initialisation du handler
-SEVERE  : [model.TarotModel] -:- [main] -:- Erreur lors de l'initialisation ! 
+INFO  	:  [model.TarotModel] [<init>] [(17/11/2016) | 18:04:13.720]  : Ajout au Logger du FileHandler : model.TarotModel.log
+INFO  	:  [model.TarotModel] [<init>] [(17/11/2016) | 18:04:13.725]  : Penser à faire une classe perso pour avoir son propre Logger et rendre le code plus propre et lisible.
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.857]  : Ajout d'un nouvel objet : ressources.Card --> N°1
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.859]  : Ajout d'un nouvel objet : ressources.Card --> N°2
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.862]  : Ajout d'un nouvel objet : ressources.Card --> N°3
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.865]  : Ajout d'un nouvel objet : ressources.Card --> N°4
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.867]  : Ajout d'un nouvel objet : ressources.Card --> N°5
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.870]  : Ajout d'un nouvel objet : ressources.Card --> N°6
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.872]  : Ajout d'un nouvel objet : ressources.Card --> N°7
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.873]  : Ajout d'un nouvel objet : ressources.Card --> N°8
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.876]  : Ajout d'un nouvel objet : ressources.Card --> N°9
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.878]  : Ajout d'un nouvel objet : ressources.Card --> N°10
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.880]  : Ajout d'un nouvel objet : ressources.Card --> N°11
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.882]  : Ajout d'un nouvel objet : ressources.Card --> N°12
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.884]  : Ajout d'un nouvel objet : ressources.Card --> N°13
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.886]  : Ajout d'un nouvel objet : ressources.Card --> N°14
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.888]  : Ajout d'un nouvel objet : ressources.Card --> N°15
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.891]  : Ajout d'un nouvel objet : ressources.Card --> N°16
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.893]  : Ajout d'un nouvel objet : ressources.Card --> N°17
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.895]  : Ajout d'un nouvel objet : ressources.Card --> N°18
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.896]  : Ajout d'un nouvel objet : ressources.Card --> N°19
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.898]  : Ajout d'un nouvel objet : ressources.Card --> N°20
+INFO  	:  [view.TarotLocalViewGame] [<init>] [(17/11/2016) | 18:04:14.901]  : Ajout d'un nouvel objet : ressources.Card --> N°21
