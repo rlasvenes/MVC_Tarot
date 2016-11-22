@@ -9,7 +9,6 @@ public class TarotControler {
 	public TarotControler(TarotModel model) {
 		this.model = model;
 		this.model.countObservers();
-		System.out.println("Number of oberservers : " + model.countObservers());
 	}
 
 }

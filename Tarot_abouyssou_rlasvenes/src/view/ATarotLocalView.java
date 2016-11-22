@@ -3,7 +3,6 @@ package view;
 import java.util.Observer;
 
 import javax.swing.JPanel;
-
 import controler.TarotControler;
 import model.TarotModel;
 

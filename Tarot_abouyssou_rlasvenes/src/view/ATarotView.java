@@ -6,6 +6,7 @@ import model.TarotModel;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 public abstract class ATarotView extends JFrame implements Observer {
 
@@ -13,6 +14,8 @@ public abstract class ATarotView extends JFrame implements Observer {
 	
 	protected TarotControler 	controler;
 	protected TarotModel		model;
+	
+	protected JScrollPane		scrollBar = null;
 	
 	public ATarotView(String title, TarotModel tm, TarotControler tc) {
 		super(title);

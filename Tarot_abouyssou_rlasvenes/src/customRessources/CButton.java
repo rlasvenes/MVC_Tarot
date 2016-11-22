@@ -11,7 +11,8 @@ public class CButton extends JButton {
 
 	private static final long serialVersionUID = -1233671002941395259L;
 	
-	public static final Insets MY_MARGIN = new Insets(10, 10, 10, 10);
+	public static final Insets MY_MEDIUM_MARGIN = new Insets(10, 10, 10, 10);
+	public static final Insets NULL_MARGIN = new Insets(0, 0, 0, 0);
 	
 	public CButton(String title, Insets inset) {
 		super(title);
