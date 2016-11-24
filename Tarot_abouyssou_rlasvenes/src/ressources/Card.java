@@ -47,7 +47,7 @@ public class Card extends CButton implements ActionListener {
 			label 		= new JLabel(new ImageIcon(imageVerso.getScaledInstance(imageVerso.getWidth()/2, imageVerso.getHeight()/2, 1))); // and create the image
 			label.setSize(imageRecto.getWidth(null), imageRecto.getHeight(null));
 
-			label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3, true));
+			label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
 
 			add(label); // first add -> so component[0]
 			addActionListener(this);
