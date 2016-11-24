@@ -1,25 +1,18 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.Observable;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import controler.TarotControler;
 import customRessources.CButton;
 import model.TarotModel;
-import ressources.BottomPanel;
-import ressources.HeaderPanel;
 
 public class TarotViewMenu extends ATarotView implements ActionListener {
 
@@ -36,7 +29,7 @@ public class TarotViewMenu extends ATarotView implements ActionListener {
 	public TarotViewMenu(String title, TarotModel tm, TarotControler tc) {
 		super(title, tm, tc);
 		initGUI();
-		initListeners(tm, tc);
+		initListeners();
 	}
 
 	private void initGUI() {
@@ -69,69 +62,10 @@ public class TarotViewMenu extends ATarotView implements ActionListener {
 		this.add(fixedPanel);
 	}
 
-	private void initListeners(TarotModel tm, TarotControler tc) {
-		btnPlay.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					// on réinitialise le Panel conteneur principale
-					getContentPane().removeAll();
-
-					// on ajoute notre nouvel vue locale pour le jeu (toujours dans la même frame)
-					add(new TarotLocalViewGame(tm, tc));
-					add(new HeaderPanel(), BorderLayout.PAGE_START);
-					add(new BottomPanel(), BorderLayout.PAGE_END);
-					
-					// on rafraichit notre fenêtre et on valide ses composants
-					revalidate();
-					repaint();
-				}
-				catch (IOException ex) {
-					JOptionPane.showMessageDialog(null, ex.getMessage());
-				}
-			}
-		});
-
-		btnRules.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				getContentPane().removeAll();
-
-				GridBagConstraints gbc = new GridBagConstraints();
-				gbc.gridwidth = GridBagConstraints.REMAINDER;
-				gbc.fill = GridBagConstraints.HORIZONTAL;
-				gbc.insets = new Insets(10, 10, 10, 10);
-
-
-				JPanel pan = new JPanel(new GridBagLayout());
-				JLabel lab = new JLabel("Voici quelques règles élémentaires du Tarot : ");
-				JLabel lab2 = new JLabel("<html><p style = \"text-align: center; \">- Vous devez perdre ! Le petit chien n'a pas le droit de se faire enculer à sec avec du gravier !</p></html>");
-				lab2.setFont(new Font("Gentium", Font.BOLD, 32));
-				lab.setFont(new Font("Gentium", Font.BOLD, 32));
-				lab.setForeground(Color.RED);
-				lab2.setForeground(Color.BLUE);
-
-				lab2.setHorizontalAlignment(JLabel.CENTER);
-				pan.add(lab, gbc);
-				pan.add(lab2, gbc);
-				add(pan, BorderLayout.NORTH);
-
-				revalidate();
-				repaint();
-			}
-		});
-
-		btnQuit.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				System.out.println("You quit the application...");
-			}
-		});
+	private void initListeners() {
+		btnPlay.addActionListener(this);
+		btnRules.addActionListener(this);
+		btnQuit.addActionListener(this);
 
 		validate();
 	}
@@ -144,6 +78,14 @@ public class TarotViewMenu extends ATarotView implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// do nothing
+		if (e.getSource() == btnPlay) {
+			controler.launchGame(this, model, controler);
+		}
+		else if (e.getSource() == btnRules) {
+			controler.displayRules(this);
+		}
+		else if (e.getSource() == btnQuit) {
+			controler.exitApplication(this);
+		}
 	}
 }

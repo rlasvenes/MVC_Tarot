@@ -21,6 +21,7 @@ public class MyLogger extends SecurityManager {
     {
         String className = new MyLogger(MyLogger.class.getName()).getClassName();
         Logger logger = Logger.getLogger(className);
+        logger.setUseParentHandlers(false);
         
         try {
         	// peut renvoyer une exception si il y a un problème lors de la création/ouverture du fichier .log

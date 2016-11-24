@@ -2,22 +2,39 @@ package ressources;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
 
+import controler.TarotControler;
 import customRessources.CButton;
+import model.TarotModel;
 
 public class HeaderPanel extends JPanel {
 
 	private static final long serialVersionUID = 396698955264125256L;
 	
+	// boutons correspondant aux actions pouvant être réalisé par l'ensemble des joueurs,
+	// plus particuliérement, le joueur 1 (utilisateur).
 	protected CButton action1 = new CButton("Flip cards"		, CButton.MY_MEDIUM_MARGIN);
 	protected CButton action2 = new CButton("Passer"			, CButton.MY_MEDIUM_MARGIN);
 	protected CButton action3 = new CButton("Constituer écart"	, CButton.MY_MEDIUM_MARGIN);
 
-	public HeaderPanel() {
+	public HeaderPanel(TarotModel model, TarotControler controler) {
 		super();
 		
-		setBackground(Color.CYAN.darker().darker());
+		// appel au controller qui va par la suite modifier les donnees du model
+		action1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// pour chaque cartes dans NOTRE main (joeur 1), on les retournes.
+				controler.flipCards();
+			}
+		});
+		
+		setBackground(Color.CYAN.darker().darker().darker());
 		
 		// Layout pour espacement entre les boutons
 		FlowLayout flow = new FlowLayout();
