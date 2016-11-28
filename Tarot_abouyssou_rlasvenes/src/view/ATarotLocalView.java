@@ -4,7 +4,7 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 import controler.TarotControler;
-import customRessources.CPanelImage;
+
 import model.TarotModel;
 
 public abstract class ATarotLocalView extends JPanel implements Observer {
@@ -16,7 +16,7 @@ public abstract class ATarotLocalView extends JPanel implements Observer {
 	
 	public ATarotLocalView(String title, TarotModel tm, TarotControler tc) {
 		super();
-		add(new CPanelImage("img/ressources-100/tapis.jpg"));
+	
 		
 		model 		= tm;
 		controler 	= tc;

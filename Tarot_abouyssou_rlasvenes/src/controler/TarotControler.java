@@ -32,6 +32,22 @@ public class TarotControler {
 			c.flip();
 			c.update(c.getGraphics());
 		}
+
+	}
+	
+	public void constituerEcart(){
+		
+	}
+	
+	public void prendre(JFrame f){
+		for(Card c : model.getChien().getCards()){
+			model.getPlayerByIndex(0).addCardOfChien(c);
+			c.update(c.getGraphics());
+		}
+		f.revalidate();
+		f.repaint();
+		System.out.println(model.getPlayerByIndex(0).getHand().size());
+		
 	}
 	
 	// on lance le jeu (du moins, tout les composants graphiques nécéssaire)

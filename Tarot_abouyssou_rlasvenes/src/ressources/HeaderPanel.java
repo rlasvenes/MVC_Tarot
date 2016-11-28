@@ -20,6 +20,7 @@ public class HeaderPanel extends JPanel {
 	protected CButton action1 = new CButton("Flip cards"		, CButton.MY_MEDIUM_MARGIN);
 	protected CButton action2 = new CButton("Passer"			, CButton.MY_MEDIUM_MARGIN);
 	protected CButton action3 = new CButton("Constituer écart"	, CButton.MY_MEDIUM_MARGIN);
+	protected CButton action4 = new CButton("Prendre"			, CButton.MY_MEDIUM_MARGIN);
 
 	public HeaderPanel(TarotModel model, TarotControler controler) {
 		super();
@@ -31,6 +32,15 @@ public class HeaderPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// pour chaque cartes dans NOTRE main (joeur 1), on les retournes.
 				controler.flipCards();
+			}
+		});
+		
+		action4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controler.prendre(model);
+				
 			}
 		});
 		
@@ -47,5 +57,6 @@ public class HeaderPanel extends JPanel {
 		add(action1);
 		add(action2);
 		add(action3);
+		add(action4);
 	}	
 }

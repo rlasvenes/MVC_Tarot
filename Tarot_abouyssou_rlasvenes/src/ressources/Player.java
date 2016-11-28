@@ -21,6 +21,11 @@ public class Player {
 		}
 		return false;
 	}
+	public void addCardOfChien(Card c) {
+		while(hand.size()< MAXIMUM_CARDS_IN_HAND + Chien.NB_CHIEN_CARDS)
+		hand.add(c);
+	}
+
 	
 	// permet d'enlever une carte de la main du joueur.
 	// Utile pour constituer l'écart, ou bien pour remélanger si les 4 joueurs passent.
