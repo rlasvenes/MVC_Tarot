@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controler.TarotControler;
@@ -39,8 +41,9 @@ public class HeaderPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controler.prendre(model);
-				
+				JOptionPane.showMessageDialog(null, "ERREUR, 0xdeadbeef");
+				controler.prendre();
+				controler.getLocalView().showCardsOfPlayerOne(controler.getMainFrame());
 			}
 		});
 		

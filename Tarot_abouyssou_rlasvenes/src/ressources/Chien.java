@@ -15,4 +15,8 @@ public class Chien {
 	public ArrayList<Card> getCards() {
 		return chien;
 	}
+	
+	public void removeCardFromChien(Card c) {
+		chien.remove(c);
+	}
 }

@@ -2,11 +2,13 @@ package controler;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,6 +23,8 @@ import view.TarotLocalViewGame;
 public class TarotControler {
 	
 	private TarotModel model;
+	private TarotLocalViewGame view;
+	private JFrame f;
 	
 	public TarotControler(TarotModel model) {
 		this.model = model;
@@ -32,22 +36,30 @@ public class TarotControler {
 			c.flip();
 			c.update(c.getGraphics());
 		}
-
 	}
 	
 	public void constituerEcart(){
 		
 	}
 	
-	public void prendre(JFrame f){
-		for(Card c : model.getChien().getCards()){
-			model.getPlayerByIndex(0).addCardOfChien(c);
-			c.update(c.getGraphics());
-		}
-		f.revalidate();
-		f.repaint();
-		System.out.println(model.getPlayerByIndex(0).getHand().size());
+	public void prendre() {
+		ArrayList<Card> copy = new ArrayList<>(model.getChien().getCards());
+//		for(Card c : copy) {
+//			model.getPlayerByIndex(0).addCardOfChien(c);
+//			//model.getChien().removeCardFromChien(c);
+//		}
 		
+		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(0));
+		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(1));
+		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(2));
+		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(3));
+		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(4));
+		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(5));
+		
+		model.getChien().getCards().get(0).setLayout(new FlowLayout());
+		
+		System.out.println(model.getPlayerByIndex(0).getHand().size());
+		System.out.println(model.getChien().getCards().size());
 	}
 	
 	// on lance le jeu (du moins, tout les composants graphiques nécéssaire)
@@ -60,6 +72,10 @@ public class TarotControler {
 			// on ajoute notre nouvel vue locale pour le jeu (toujours dans la même frame)
 			TarotLocalViewGame tlvg = new TarotLocalViewGame(tm, tc);
 			f.add(tlvg);
+			
+			tc.setLocalView(tlvg);
+			tc.setMainFrame(f);
+			
 			f.add(new HeaderPanel(tm, tc), BorderLayout.PAGE_START);
 			f.add(new BottomPanel(tm, tc), BorderLayout.PAGE_END);
 			
@@ -120,5 +136,21 @@ public class TarotControler {
 	// va permettre de pouvoir quitter notre application
 	public void exitApplication(JFrame f) {
 		f.dispose();
+	}
+	
+	public void setLocalView(TarotLocalViewGame view) {
+		this.view = view;
+	}
+	
+	public TarotLocalViewGame getLocalView() {
+		return view;
+	}
+	
+	public void setMainFrame(JFrame f) {
+		this.f = f;
+	}
+	
+	public JFrame getMainFrame() {
+		return this.f;
 	}
 }
