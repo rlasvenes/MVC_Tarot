@@ -8,9 +8,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import ressources.Card;
+import ressources.CardComparator;
 import ressources.Chien;
 import ressources.Player;
 import utility.MyLogger;
+
 
 public class TarotModel extends Observable {
 
@@ -42,6 +44,7 @@ public class TarotModel extends Observable {
 		initCards();
 		initChien();
 		distribuateCards();
+		trier();
 	}
 
 	public void initPlayers() {
@@ -119,6 +122,7 @@ public class TarotModel extends Observable {
 						cards.remove(INDEX_FIRST_CARD);
 					//}
 				}
+				
 
 				// si il y a au moins une carte dans le chien, et qu'il reste aussi au moins deux place
 				// alors on va ajouter les premiere/derniere carte (cf: regle tarot)
@@ -137,6 +141,11 @@ public class TarotModel extends Observable {
 				}
 			}
 		}
+	}
+	
+	public void trier()
+	{
+		Collections.sort(players[0].getHand(), new CardComparator() );
 	}
 
 	public ArrayList<Card> getCards() {

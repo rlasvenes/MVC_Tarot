@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import controler.TarotControler;
 import customRessources.CButton;
 import model.TarotModel;
+import view.TarotEcartView;
 
 public class HeaderPanel extends JPanel {
 
@@ -36,14 +37,26 @@ public class HeaderPanel extends JPanel {
 				controler.flipCards();
 			}
 		});
-		
+		action3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			
+				new TarotEcartView("Ta race",model, controler);
+			
+			}
+		});
 		action4.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "ERREUR, 0xdeadbeef");
+				JOptionPane.showMessageDialog(null, "Constituez votre écart");
 				controler.prendre();
 				controler.getLocalView().showCardsOfPlayerOne(controler.getMainFrame());
+				
+				controler.getMainFrame().setSize(controler.getMainFrame().getWidth() - 1, controler.getMainFrame().getHeight());
+				
+				
 			}
 		});
 		
