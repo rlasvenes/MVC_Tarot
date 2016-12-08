@@ -17,8 +17,8 @@ import utility.MyLogger;
 public class TarotModel extends Observable {
 
 	// donnees relatives au jeu
-	protected final int NB_TOTAL_CARDS 		= 78;
-	protected final int NB_PLAYER 			= 4;
+	public final int NB_TOTAL_CARDS 		= 78;
+	public final int NB_PLAYER 			= 4;
 
 	// donnees relatives aux cartes
 	private final int 	INDEX_FIRST_CARD 	= 0;
@@ -145,7 +145,9 @@ public class TarotModel extends Observable {
 	
 	public void trier()
 	{
+		System.out.println(players[0].getHand());
 		Collections.sort(players[0].getHand(), new CardComparator() );
+
 	}
 
 	public ArrayList<Card> getCards() {
@@ -156,7 +158,9 @@ public class TarotModel extends Observable {
 		return players[indexPlayer];
 	}
 
+
 	public Chien getChien() {
 		return chien;
 	}
+	
 }

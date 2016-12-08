@@ -1,8 +1,10 @@
 package ressources;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Chien {
+
+public class Chien{
 	
 	public final static int 	NB_CHIEN_CARDS 	= 6;
 	private ArrayList<Card> 	chien 			= null;
@@ -19,4 +21,7 @@ public class Chien {
 	public void removeCardFromChien(Card c) {
 		chien.remove(c);
 	}
-}
+
+
+	}
+

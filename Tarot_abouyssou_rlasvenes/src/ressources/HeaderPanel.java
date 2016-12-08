@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,16 +21,17 @@ public class HeaderPanel extends JPanel {
 	
 	// boutons correspondant aux actions pouvant être réalisé par l'ensemble des joueurs,
 	// plus particuliérement, le joueur 1 (utilisateur).
-	protected CButton action1 = new CButton("Flip cards"		, CButton.MY_MEDIUM_MARGIN);
-	protected CButton action2 = new CButton("Passer"			, CButton.MY_MEDIUM_MARGIN);
-	protected CButton action3 = new CButton("Constituer écart"	, CButton.MY_MEDIUM_MARGIN);
-	protected CButton action4 = new CButton("Prendre"			, CButton.MY_MEDIUM_MARGIN);
+	protected CButton actionFlip = new CButton("Flip cards"		, CButton.MY_MEDIUM_MARGIN);
+	protected CButton actionPasser = new CButton("Passer"			, CButton.MY_MEDIUM_MARGIN);
+	protected CButton actionEcart = new CButton("Constituer écart"	, CButton.MY_MEDIUM_MARGIN);
+	protected CButton actionPrendre = new CButton("Prendre"			, CButton.MY_MEDIUM_MARGIN);
+	protected CButton actionGarde = new CButton("Garde"			, CButton.MY_MEDIUM_MARGIN);
 
 	public HeaderPanel(TarotModel model, TarotControler controler) {
 		super();
 		
 		// appel au controller qui va par la suite modifier les donnees du model
-		action1.addActionListener(new ActionListener() {
+		actionFlip.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -37,7 +39,21 @@ public class HeaderPanel extends JPanel {
 				controler.flipCards();
 			}
 		});
-		action3.addActionListener(new ActionListener() {
+		
+		actionPasser.addActionListener(new ActionListener(){
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					controler.restart();
+				} catch (IOException e1) {
+				
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		actionEcart.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -46,12 +62,13 @@ public class HeaderPanel extends JPanel {
 			
 			}
 		});
-		action4.addActionListener(new ActionListener() {
+		actionPrendre.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "Constituez votre écart");
 				controler.prendre();
+				model.trier();
 				controler.getLocalView().showCardsOfPlayerOne(controler.getMainFrame());
 				
 				controler.getMainFrame().setSize(controler.getMainFrame().getWidth() - 1, controler.getMainFrame().getHeight());
@@ -70,9 +87,9 @@ public class HeaderPanel extends JPanel {
 		
 		setLayout(flow);
 		
-		add(action1);
-		add(action2);
-		add(action3);
-		add(action4);
+		add(actionFlip);
+		add(actionPasser);
+		add(actionEcart);
+		add(actionPrendre);
 	}	
 }

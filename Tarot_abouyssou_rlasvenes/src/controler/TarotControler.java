@@ -18,6 +18,7 @@ import model.TarotModel;
 import ressources.BottomPanel;
 import ressources.Card;
 import ressources.HeaderPanel;
+import ressources.Player;
 import view.TarotLocalViewGame;
 
 public class TarotControler {
@@ -46,8 +47,10 @@ public class TarotControler {
 
 	public void prendre() {
 		
-		
-	
+//		
+//		for (Card c : model.getPlayerByIndex(0).getHand()) {
+//			System.out.println("Carte : " + c);
+//		}
 		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(0));
 		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(1));
 		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(2));
@@ -63,9 +66,17 @@ public class TarotControler {
 		
 		
 		System.out.println(model.getChien().getCards().size());
-		model.trier();
-		
 
+		
+		for (Card c : model.getPlayerByIndex(0).getHand()) {
+			System.out.println("Carte : " + c);
+		}
+		System.out.println("bite");
+		model.trier();
+		for (Card c : model.getPlayerByIndex(0).getHand()) {
+			System.out.println("Carte : " + c);
+		}
+		
 	}
 
 	// on lance le jeu (du moins, tout les composants graphiques nécéssaire)
@@ -137,7 +148,39 @@ public class TarotControler {
 		f.revalidate();
 		f.repaint();
 	}
-
+	public void restart() throws IOException{
+		for(int i = 0; i<model.NB_PLAYER;i++)
+		{
+			model.getPlayerByIndex(i).getHand().removeAll(model.getPlayerByIndex(i).getHand());
+		
+			
+		}
+		this.getLocalView().remove(getLocalView());
+		model.initPlayers();
+		model.initCards();
+		model.initChien();
+		this.getLocalView().revalidate();
+		
+	}
+	public void petitSec() throws IOException{
+		int cpt = 0;
+		boolean isPresent = false;
+		for(Card c : model.getPlayerByIndex(0).getHand())
+		{
+			if(c.getSymbole()=="Atout" || c.getSymbole()=="Excuse")
+			{
+				cpt++;
+				if(c.getValue()==1)
+					isPresent=true;
+			}
+			if(isPresent && cpt==1)
+				restart();
+				
+			
+		}
+			
+	}
+	
 	// va permettre de pouvoir quitter notre application
 	public void exitApplication(JFrame f) {
 		f.dispose();
