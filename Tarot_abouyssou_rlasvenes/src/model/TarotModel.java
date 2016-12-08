@@ -44,7 +44,7 @@ public class TarotModel extends Observable {
 		initCards();
 		initChien();
 		distribuateCards();
-		trier();
+		trierCartes();
 	}
 
 	public void initPlayers() {
@@ -117,21 +117,16 @@ public class TarotModel extends Observable {
 		while (!cards.isEmpty()) {
 			for (int i=0; i<NB_PLAYER; i++) {
 				for (int j=0; j<3; j++) {
-					//if ((cards.size() > 0) && (cards.get(INDEX_FIRST_CARD) != null)) { // inutile (je pense ?) car condition
-						players[i].addCardToHand(cards.get(INDEX_FIRST_CARD));			 // parent ne le permettra jamais (?).
-						cards.remove(INDEX_FIRST_CARD);
-					//}
+					players[i].addCardToHand(cards.get(INDEX_FIRST_CARD));			 // parent ne le permettra jamais (?).
+					cards.remove(INDEX_FIRST_CARD);
 				}
-				
 
 				// si il y a au moins une carte dans le chien, et qu'il reste aussi au moins deux place
 				// alors on va ajouter les premiere/derniere carte (cf: regle tarot)
-				
+
 				if ((!chien.getCards().isEmpty()) && (chien.getCards().size() < Chien.NB_CHIEN_CARDS - 2)) {
 					chien.getCards().add(first_card);// elles sont déjà retiré du paquet (en "avance")
 					chien.getCards().add(last_card);
-
-					System.out.println("First Card = " + first_card + "\nLast Card = " + last_card);
 				}
 				// on remplit le chien avec la premiere carte qu'on tire du paquet 
 				// (paquet courant, qui diminu au fur et à mesure).
@@ -142,12 +137,10 @@ public class TarotModel extends Observable {
 			}
 		}
 	}
-	
-	public void trier()
-	{
-		System.out.println(players[0].getHand());
-		Collections.sort(players[0].getHand(), new CardComparator() );
 
+	public void trierCartes()
+	{
+		Collections.sort(players[0].getHand(), new CardComparator() );
 	}
 
 	public ArrayList<Card> getCards() {
@@ -158,9 +151,12 @@ public class TarotModel extends Observable {
 		return players[indexPlayer];
 	}
 
+	public Player[] getPlayers() {
+		return players;
+	}
 
 	public Chien getChien() {
 		return chien;
 	}
-	
+
 }

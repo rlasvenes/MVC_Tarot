@@ -2,30 +2,35 @@ package controler;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
+
 import model.TarotModel;
 import ressources.BottomPanel;
 import ressources.Card;
+import ressources.Chien;
 import ressources.HeaderPanel;
-import ressources.Player;
 import view.TarotLocalViewGame;
+import view.TarotViewMenu;
 
 public class TarotControler {
 
 	private TarotModel model;
 	private TarotLocalViewGame view;
+	private BottomPanel bottomPanel;
 	private JFrame f;
+	private TarotViewMenu tarotViewMenu;
 
 	public TarotControler(TarotModel model) {
 		this.model = model;
@@ -33,12 +38,26 @@ public class TarotControler {
 
 	// va retourner nos cartes en main.
 	public void flipCards() {
-		for (Card c : model.getPlayerByIndex(0).getHand()) {
-			c.flip();
-			c.update(c.getGraphics());
-			
-		}
 
+		// obligatoire pour initialiser "last_index"
+		model.getPlayerByIndex(0).last_index = 0;
+
+		Timer t = new Timer(110, new ActionListener() {
+
+			int i = model.getPlayerByIndex(0).last_index;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (i == model.getPlayerByIndex(0).getHand().size()) {
+					((Timer) e.getSource()).stop();
+				} else {
+					model.getPlayerByIndex(0).getHand().get(i).flip();
+					i = model.getPlayerByIndex(0).getNextIndex();
+				}
+			}
+		});
+
+		t.start();
 	}
 
 	public void constituerEcart() {
@@ -46,37 +65,15 @@ public class TarotControler {
 	}
 
 	public void prendre() {
-		
-//		
-//		for (Card c : model.getPlayerByIndex(0).getHand()) {
-//			System.out.println("Carte : " + c);
-//		}
-		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(0));
-		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(1));
-		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(2));
-		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(3));
-		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(4));
-		model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(5));
-		model.getChien().getCards().remove(0);
-		model.getChien().getCards().remove(0);
-		model.getChien().getCards().remove(0);
-		model.getChien().getCards().remove(0);
-		model.getChien().getCards().remove(0);
-		model.getChien().getCards().remove(0);
-		
-		
-		System.out.println(model.getChien().getCards().size());
+		for (int i = 0; i < Chien.NB_CHIEN_CARDS; i++) {
+			model.getPlayerByIndex(0).getHand().add(model.getChien().getCards().get(i));
+		}
 
-		
-		for (Card c : model.getPlayerByIndex(0).getHand()) {
-			System.out.println("Carte : " + c);
+		for (int i = 0; i < Chien.NB_CHIEN_CARDS; i++) {
+			model.getChien().getCards().remove(0);
 		}
-		System.out.println("bite");
-		model.trier();
-		for (Card c : model.getPlayerByIndex(0).getHand()) {
-			System.out.println("Carte : " + c);
-		}
-		
+
+		model.trierCartes();
 	}
 
 	// on lance le jeu (du moins, tout les composants graphiques nécéssaire)
@@ -95,7 +92,9 @@ public class TarotControler {
 			tc.setMainFrame(f);
 
 			f.add(new HeaderPanel(tm, tc), BorderLayout.PAGE_START);
-			f.add(new BottomPanel(tm, tc), BorderLayout.PAGE_END);
+			BottomPanel bottomPanel = new BottomPanel(tm, tc);
+			tc.setBottomPanel(bottomPanel);
+			f.add(bottomPanel, BorderLayout.PAGE_END);
 
 			// on va venir ajouter les cartes du joueur 1 (nous) dans notre
 			// fenêtre principale
@@ -115,6 +114,7 @@ public class TarotControler {
 		// IMPORTANT !!
 		// Note à moi-même :
 		// Penser à faire une classe du genre; DisplayRulesView
+
 		f.getContentPane().removeAll();
 
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -148,39 +148,64 @@ public class TarotControler {
 		f.revalidate();
 		f.repaint();
 	}
-	public void restart() throws IOException{
-		for(int i = 0; i<model.NB_PLAYER;i++)
-		{
-			model.getPlayerByIndex(i).getHand().removeAll(model.getPlayerByIndex(i).getHand());
-		
-			
+
+	public void restart(TarotControler tc) throws IOException {
+		// on recupere les cartes des 4 joueurs et on reconstitue le paquet
+		// initiale
+		for (int i = 0; i < model.NB_PLAYER; i++) {
+			for (Card c : model.getPlayerByIndex(i).getHand()) {
+				model.getCards().add(c);
+			}
 		}
-		this.getLocalView().remove(getLocalView());
-		model.initPlayers();
+
+		// on supprimes les cartes de tout les joeurs
+		for (int i = 0; i < model.NB_PLAYER; i++) {
+			for (Card c : model.getPlayerByIndex(i).getHand()) {
+				model.getCards().remove(c);
+			}
+		}
+
+		// on recupere les cartes du chien
+		for (Card c : model.getChien().getCards()) {
+			model.getCards().add(c);
+		}
+
+		// on supprimes les cartes du chien (separement)
+		if (model.getChien().getCards().size() > 0) {
+			for (int i = 0; i < Chien.NB_CHIEN_CARDS; i++) {
+				model.getChien().getCards().remove(0);
+			}
+		}
+
+		tc.getLocalView().removeAll();
+		tc.getBottomPanel().removeAll();
+		tc.getBottomPanel().update(tc.getBottomPanel().getGraphics());
+		tc.getLocalView().update(tc.getLocalView().getGraphics());
+
 		model.initCards();
 		model.initChien();
-		this.getLocalView().revalidate();
-		
+		model.initPlayers();
+		model.distribuateCards();
+
+		tc.getLocalView().showCardsOfPlayerOne(tc.getMainFrame());
+		tc.getBottomPanel().showCardsOfChien(tc.getBottomPanel(), model);
 	}
-	public void petitSec() throws IOException{
+
+	public void petitSec() throws IOException {
 		int cpt = 0;
 		boolean isPresent = false;
-		for(Card c : model.getPlayerByIndex(0).getHand())
-		{
-			if(c.getSymbole()=="Atout" || c.getSymbole()=="Excuse")
-			{
+
+		for (Card c : model.getPlayerByIndex(0).getHand()) {
+			if (c.getSymbole() == "Atout" || c.getSymbole() == "Excuse") {
 				cpt++;
-				if(c.getValue()==1)
-					isPresent=true;
+				if (c.getValue() == 1)
+					isPresent = true;
 			}
-			if(isPresent && cpt==1)
-				restart();
-				
-			
+			if (isPresent && cpt == 1)
+				restart(this);
 		}
-			
 	}
-	
+
 	// va permettre de pouvoir quitter notre application
 	public void exitApplication(JFrame f) {
 		f.dispose();
@@ -194,11 +219,27 @@ public class TarotControler {
 		return view;
 	}
 
+	public void setBottomPanel(BottomPanel bottomPanel) {
+		this.bottomPanel = bottomPanel;
+	}
+
+	public BottomPanel getBottomPanel() {
+		return this.bottomPanel;
+	}
+
 	public void setMainFrame(JFrame f) {
 		this.f = f;
 	}
 
 	public JFrame getMainFrame() {
 		return this.f;
+	}
+
+	public void setTarotViewMenu(TarotViewMenu tarotViewMenu) {
+		this.tarotViewMenu = tarotViewMenu;
+	}
+
+	public TarotViewMenu getTarotViewMenu() {
+		return this.tarotViewMenu;
 	}
 }

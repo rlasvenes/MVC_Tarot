@@ -20,11 +20,10 @@ public class TarotLocalViewGame extends ATarotLocalView {
 	}
 
 	public void showCardsOfPlayerOne(JFrame f) {
-		//removeAll();
 		for (Card c : model.getPlayerByIndex(0).getHand()) {
 			add(c, BorderLayout.CENTER);
 		}
-		f.update(f.getGraphics());
+		f.revalidate();
 	}
 
 	@Override

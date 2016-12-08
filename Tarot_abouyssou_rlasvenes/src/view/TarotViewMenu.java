@@ -24,12 +24,14 @@ public class TarotViewMenu extends ATarotView implements ActionListener {
 	protected JPanel 	jpanel 		= new JPanel();
 	protected CButton	btnPlay		= new CButton("Lancer le jeu"	, CButton.MY_MEDIUM_MARGIN);
 	protected CButton	btnRules	= new CButton("Les règles"		, CButton.MY_MEDIUM_MARGIN);
-	protected CButton 	btnQuit		= new CButton("Quitter"			, CButton.MY_MEDIUM_MARGIN); 
+	protected CButton 	btnQuit		= new CButton("Quitter"			, CButton.MY_MEDIUM_MARGIN);
 
 	public TarotViewMenu(String title, TarotModel tm, TarotControler tc) {
 		super(title, tm, tc);
 		initGUI();
 		initListeners();
+		
+		controler.setTarotViewMenu(this);
 	}
 
 	private void initGUI() {
@@ -51,7 +53,7 @@ public class TarotViewMenu extends ATarotView implements ActionListener {
 
 		jpanel.setLayout(new GridBagLayout());
 		jpanel.setPreferredSize(new Dimension(getWidth(), getHeight()));
-		jpanel.setBackground(Color.GRAY);
+		jpanel.setBackground(Color.GREEN.darker().darker().darker());
 		jpanel.add(btnPlay , gbc);
 		jpanel.add(btnRules, gbc);
 		jpanel.add(btnQuit , gbc);	
@@ -60,6 +62,7 @@ public class TarotViewMenu extends ATarotView implements ActionListener {
 
 		fixedPanel.add(jpanel);
 		this.add(fixedPanel);
+		validate();
 	}
 
 	private void initListeners() {

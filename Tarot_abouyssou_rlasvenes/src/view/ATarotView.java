@@ -3,10 +3,10 @@ package view;
 import controler.TarotControler;
 import model.TarotModel;
 
+import java.awt.Dimension;
 import java.util.Observer;
 
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 
 public abstract class ATarotView extends JFrame implements Observer {
 
@@ -15,16 +15,17 @@ public abstract class ATarotView extends JFrame implements Observer {
 	protected TarotControler 	controler;
 	protected TarotModel		model;
 	
-	protected JScrollPane		scrollBar = null;
-	
 	public ATarotView(String title, TarotModel tm, TarotControler tc) {
 		super(title);
 		model 		= tm;
 		controler 	= tc;
 		
-		setSize(1080, 720);
+		setSize(1500, 800);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(800, 600));
+		
+		controler.setMainFrame(this);
 		
 		validate();
 		
