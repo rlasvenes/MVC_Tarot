@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Collections;
 
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
@@ -13,7 +14,6 @@ import javax.swing.JPanel;
 import controler.TarotControler;
 import customRessources.CButton;
 import model.TarotModel;
-import view.TarotEcartView;
 
 public class HeaderPanel extends JPanel {
 
@@ -23,7 +23,6 @@ public class HeaderPanel extends JPanel {
 	// plus particuliérement, le joueur 1 (utilisateur).
 	protected CButton actionFlip 	= new CButton("Retourner cartes"	, CButton.MY_MEDIUM_MARGIN);
 	protected CButton actionPasser 	= new CButton("Passer"				, CButton.MY_MEDIUM_MARGIN);
-	protected CButton actionEcart 	= new CButton("Constituer écart"	, CButton.MY_MEDIUM_MARGIN);
 	protected CButton actionPrendre = new CButton("Prendre"				, CButton.MY_MEDIUM_MARGIN);
 	protected CButton actionGarde 	= new CButton("Garde"				, CButton.MY_MEDIUM_MARGIN);
 
@@ -50,18 +49,11 @@ public class HeaderPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					controler.restart(controler);
-					JOptionPane.showMessageDialog(null, "Les cartes ont été redistribuées", "Nouveau tour", JOptionPane.INFORMATION_MESSAGE);
+					actionPrendre.setEnabled(true);
+					JOptionPane.showMessageDialog(controler.getMainFrame(), "Les cartes ont été redistribuées", "Nouveau tour", JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
-			}
-		});
-
-		actionEcart.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new TarotEcartView("Drag and Drop",model, controler);
 			}
 		});
 
@@ -69,10 +61,26 @@ public class HeaderPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controler.prendre();
-				model.trierCartes();
-				controler.getLocalView().showCardsOfPlayerOne(controler.getMainFrame());
-				controler.getMainFrame().revalidate();
+				if (model.getChien().getCards().size() != 0) {
+					String[] options = {"Prise", "Garde", "Garde sans le chien" ,"Garde contre le chien"}; 
+					
+					JOptionPane choicePane = new JOptionPane();
+					int choice = JOptionPane.showOptionDialog(controler.getMainFrame(), "Bonjour, choisis le type de garde : ", "Prise",
+												 0, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+					if (choice == 0 ||
+						choice == 1) {
+						controler.prendre();
+						model.trierCartes();
+						controler.getLocalView().showCardsOfPlayerOne(controler.getMainFrame());
+						controler.getMainFrame().revalidate();	
+					}
+					else if (choice == 2 ||
+							 choice == 3) {
+						controler.getBottomPanel().removeAll();
+						controler.getMainFrame().revalidate();
+					}
+					actionPrendre.setEnabled(false);
+				}
 			}
 		});
 
@@ -80,7 +88,6 @@ public class HeaderPanel extends JPanel {
 
 		add(actionFlip);
 		add(actionPasser);
-		add(actionEcart);
 		add(actionPrendre);
 	}	
 }

@@ -43,4 +43,9 @@ public class Player {
 		}
 		return hand.size();
 	}
+	
+	// pour savoir si le joueur à pris le chien ou pas 
+	public boolean aPrisLeChien() {
+		return false;
+	}
 }
